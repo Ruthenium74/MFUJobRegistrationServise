@@ -1,22 +1,25 @@
 package ru.ruthenium74.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MfuJob {
     private int id;
     private JobType jobType;
     private String user;
     private String device;
-    private String amount;
-    private Date date;
+    private int amount;
+    private LocalDateTime date;
 
-    public MfuJob(int id, JobType jobType, String user, String device, String amount) {
+    public MfuJob(int id, JobType jobType, String user, String device, int amount) {
         this.id = id;
         this.jobType = jobType;
         this.user = user;
         this.device = device;
         this.amount = amount;
-        date = new Date();
+        date = LocalDateTime.now();
+    }
+
+    public MfuJob() {
     }
 
     public int getId() {
@@ -51,19 +54,19 @@ public class MfuJob {
         this.device = device;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
