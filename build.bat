@@ -1,1 +1,1 @@
-call mvn clean maven-compiler-plugin:compile
+call mvn clean package
