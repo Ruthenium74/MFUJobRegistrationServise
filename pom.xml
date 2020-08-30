@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.ruthenium74</groupId>
-    <artifactId>MFUJobRegistrationService</artifactId>
+    <artifactId>MfuJobRegistrationService</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -16,6 +16,10 @@
 
         <spring.version>5.2.8.RELEASE</spring.version>
         <hsqldb.version>2.5.1</hsqldb.version>
+
+        <jackson-xml.version>2.11.2</jackson-xml.version>
+
+        <tomcat.version>9.0.36</tomcat.version>
     </properties>
 
     <build>
@@ -29,6 +33,80 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+<!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>${hsqldb.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>org.hsqldb.jdbcDriver</driver>
+                    &lt;!&ndash;<url>jdbc:hsqldb:file:db/MfuJobDb</url>&ndash;&gt;
+                    <url>jdbc:hsqldb:file:target/cargo/configurations/tomcat9x/db/MfuJobDb</url>
+                    <username>sa</username>
+                    <password></password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <srcFiles>
+                                <srcFile>src/main/resources/db/initialize.sql</srcFile>
+                            </srcFiles>
+                            &lt;!&ndash;<autocommit>true</autocommit>&ndash;&gt;
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.7.13</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <systemProperties>
+                            <file.encoding>UTF-8</file.encoding>
+                            <spring.profiles.active>tomcat</spring.profiles.active>
+                        </systemProperties>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                            </dependency>
+                        </dependencies>
+                    </container>
+                    <configuration>
+                        <configfiles>
+                            <configfile>
+                                <file>src/main/resources/tomcat/context.xml</file>
+                                <todir>conf/Catalina/localhost/</todir>
+                                <tofile>${project.build.finalName}.xml</tofile>
+                            </configfile>
+                        </configfiles>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>ru.ruthenium74</groupId>
+                            <artifactId>MfuJobRegistrationService</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>${project.build.finalName}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>
@@ -49,6 +127,30 @@
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson-xml.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-xml.version}</version>
         </dependency>
     </dependencies>
 

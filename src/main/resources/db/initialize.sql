@@ -6,6 +6,6 @@ CREATE TABLE mfu_jobs (
     user    VARCHAR(100) NOT NULL,
     device  VARCHAR(100) NOT NULL,
     amount  INTEGER NOT NULL,
-    time    TIMESTAMP(0) NOT NULL,
+    time    TIMESTAMP(0) DEFAULT now() NOT NULL,
     PRIMARY KEY (id, device)
 );

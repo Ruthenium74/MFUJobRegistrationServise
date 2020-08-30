@@ -1,5 +1,6 @@
 package ru.ruthenium74.util;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import ru.ruthenium74.model.JobType;
 
 import java.time.LocalDateTime;
@@ -8,28 +9,34 @@ public class QueryUtil {
     private QueryUtil() {
     }
 
-    public static String getFilteredQuery(String user, JobType type, String device, LocalDateTime from, LocalDateTime to) {
+    public static String getFilteredQuery(String user, JobType type, String device, LocalDateTime from, LocalDateTime to,
+                                          MapSqlParameterSource map) {
         StringBuffer stringBuffer = new StringBuffer("SELECT * FROM mfu_jobs WHERE");
         boolean isQueryFiltered = false;
         if (user != null) {
             isQueryFiltered = true;
-            stringBuffer.append(" user='").append(user).append("' AND");
+            stringBuffer.append(" mfu_jobs.user=:user AND");
+            map.addValue("user", user);
         }
         if (type != null) {
             isQueryFiltered = true;
-            stringBuffer.append(" type='").append(type.name()).append("' AND");
+            stringBuffer.append(" type=:type AND");
+            map.addValue("type", type.name());
         }
         if (device != null) {
             isQueryFiltered = true;
-            stringBuffer.append(" device='").append(device).append("' AND");
+            stringBuffer.append(" device=:device AND");
+            map.addValue("device", device);
         }
         if (from != null) {
             isQueryFiltered = true;
-            stringBuffer.append(" time>=").append(from).append(" AND");
+            stringBuffer.append(" time>=:fromTime AND");
+            map.addValue("fromTime", from);
         }
         if (to != null) {
             isQueryFiltered = true;
-            stringBuffer.append(" time<").append(to).append(" AND");
+            stringBuffer.append(" time<:toTime AND");
+            map.addValue("toTime", to);
         }
         if (isQueryFiltered) {
             int lastIndexOfAnd = stringBuffer.lastIndexOf(" AND");

@@ -1,25 +1,29 @@
 package ru.ruthenium74.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class MfuJob {
     private int id;
-    private JobType jobType;
+    private JobType type;
     private String user;
     private String device;
     private int amount;
-    private LocalDateTime date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    private LocalDateTime time;
 
-    public MfuJob(int id, JobType jobType, String user, String device, int amount) {
+    public MfuJob(int id, JobType type, String user, String device, int amount) {
+        this();
         this.id = id;
-        this.jobType = jobType;
+        this.type = type;
         this.user = user;
         this.device = device;
         this.amount = amount;
-        date = LocalDateTime.now();
     }
 
     public MfuJob() {
+        time = LocalDateTime.now();
     }
 
     public int getId() {
@@ -30,12 +34,12 @@ public class MfuJob {
         this.id = id;
     }
 
-    public JobType getJobType() {
-        return jobType;
+    public JobType getType() {
+        return type;
     }
 
-    public void setJobType(JobType jobType) {
-        this.jobType = jobType;
+    public void setType(JobType type) {
+        this.type = type;
     }
 
     public String getUser() {
@@ -62,11 +66,11 @@ public class MfuJob {
         this.amount = amount;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 }
