@@ -36,7 +36,7 @@
     <Resource name="jdbc/mfujobregistrationservice"
               auth="Container"
               type="javax.sql.DataSource"
-              url="jdbc:hsqldb:file:db/MfuJobDb"
+              url="jdbc:hsqldb:file:db/MfuJobDb;hsqldb.lock_file=false"
               username="sa"
               password=""
               driverClassName="org.hsqldb.jdbcDriver"

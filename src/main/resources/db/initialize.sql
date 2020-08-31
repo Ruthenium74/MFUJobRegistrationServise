@@ -1,6 +1,4 @@
-DROP TABLE mfu_jobs IF EXISTS;
-
-CREATE TABLE mfu_jobs (
+CREATE TABLE IF NOT EXISTS mfu_jobs (
     id      INTEGER NOT NULL,
     type    VARCHAR(20) NOT NULL,
     user    VARCHAR(100) NOT NULL,

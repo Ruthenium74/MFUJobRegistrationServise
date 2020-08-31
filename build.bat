@@ -1,1 +1,1 @@
-call mvn clean package
+call mvn clean package org.codehaus.cargo:cargo-maven2-plugin:start
